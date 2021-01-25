@@ -1,5 +1,6 @@
 package com.example.isen_2021
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +15,28 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.starter.setOnClickListener {
-            Toast.makeText(this, getString(R.string.toast_content), Toast.LENGTH_LONG).show()
+            statCategoryActivity(ItemType.STARTER)
         }
+
+        binding.main.setOnClickListener {
+            statCategoryActivity(ItemType.MAIN)
+        }
+
+        binding.dessert.setOnClickListener {
+            statCategoryActivity(ItemType.DESSERT)
+        }
+
+    }
+
+    private fun statCategoryActivity(item: ItemType) {
+        val intent = Intent(this, CategoryActivity::class.java)
+        intent.putExtra(CATEGORY_NAME, item)
+        startActivity(intent)
+    }
+
+    companion object {
+        const val CATEGORY_NAME = "CATEGORY_NAME"
     }
 }
