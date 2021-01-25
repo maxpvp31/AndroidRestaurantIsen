@@ -3,6 +3,9 @@ package com.example.isen_2021
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.isen_2021.category.CategoryAdapter
 import com.example.isen_2021.databinding.ActivityCategoryBinding
 
 enum class ItemType {
@@ -21,7 +24,16 @@ class CategoryActivity : AppCompatActivity() {
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
         bindind.categoryTitle.text = getCategoryTitle(selectedItem)
 
+        loadList()
+
         Log.d("lifecycle", "onCreate")
+    }
+
+    private fun loadList() {
+        var entries = listOf<String>("salade", "boeuf", "glace")
+        val adapter = CategoryAdapter(entries)
+        bindind.recyclerView.layoutManager = LinearLayoutManager(this)
+        bindind.recyclerView.adapter = adapter
     }
 
     private fun getCategoryTitle(item: ItemType?): String {
