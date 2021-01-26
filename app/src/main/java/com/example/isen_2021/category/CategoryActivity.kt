@@ -62,7 +62,6 @@ class CategoryActivity : AppCompatActivity() {
             url,
             jsonData,
             { response ->
-                Log.d("request", response.toString(2))
                 val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
                 val items = menuResult.data.firstOrNull { it.name == ItemType.categoryTitle(selectedItem) }
                 loadList(items?.items)
@@ -79,9 +78,10 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun loadList(dishes: List<Dish>?) {
-        val entries = dishes?.map { it.name }
-        entries?.let {
-            val adapter = CategoryAdapter(entries)
+        dishes?.let {
+            val adapter = CategoryAdapter(it) { dish ->
+                Log.d("dish", "selected dish ${dish.name}")
+            }
             bindind.recyclerView.layoutManager = LinearLayoutManager(this)
             bindind.recyclerView.adapter = adapter
         }

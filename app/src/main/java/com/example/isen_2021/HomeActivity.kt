@@ -14,20 +14,20 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.starter.setOnClickListener {
-            statCategoryActivity(ItemType.STARTER)
+            startCategoryActivity(ItemType.STARTER)
         }
 
         binding.main.setOnClickListener {
-            statCategoryActivity(ItemType.MAIN)
+            startCategoryActivity(ItemType.MAIN)
         }
 
         binding.dessert.setOnClickListener {
-            statCategoryActivity(ItemType.DESSERT)
+            startCategoryActivity(ItemType.DESSERT)
         }
 
     }
 
-    private fun statCategoryActivity(item: ItemType) {
+    private fun startCategoryActivity(item: ItemType) {
         val intent = Intent(this, CategoryActivity::class.java)
         intent.putExtra(CATEGORY_NAME, item)
         startActivity(intent)
