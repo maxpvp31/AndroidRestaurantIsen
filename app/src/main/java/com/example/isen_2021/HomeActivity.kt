@@ -3,9 +3,6 @@ package com.example.isen_2021
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import com.example.isen_2021.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
