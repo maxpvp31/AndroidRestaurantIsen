@@ -7,5 +7,4 @@ class Dish(
     val ingredients: List<Ingredient>,
     val images: List<String>,
     val prices: List<Price>
-) {
-}
+) {}

@@ -12,13 +12,25 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.isen_2021.category.CategoryAdapter
 import com.example.isen_2021.databinding.ActivityCategoryBinding
+import com.example.isen_2021.network.Dish
 import com.example.isen_2021.network.MenuResult
 import com.example.isen_2021.network.NetworkConstant
 import com.google.gson.GsonBuilder
 import org.json.JSONObject
 
 enum class ItemType {
-    STARTER, MAIN, DESSERT
+    STARTER, MAIN, DESSERT;
+
+    companion object {
+        fun categoryTitle(item: ItemType?) : String {
+            return when(item) {
+                STARTER -> "Entrées"
+                MAIN -> "Plats"
+                DESSERT -> "Desserts"
+                else -> ""
+            }
+        }
+    }
 }
 
 class CategoryActivity : AppCompatActivity() {
@@ -34,11 +46,11 @@ class CategoryActivity : AppCompatActivity() {
         bindind.categoryTitle.text = getCategoryTitle(selectedItem)
 
         //loadList()
-        makeRequest()
+        makeRequest(selectedItem)
         Log.d("lifecycle", "onCreate")
     }
 
-    private fun makeRequest() {
+    private fun makeRequest(selectedItem: ItemType?) {
         val queue = Volley.newRequestQueue(this)
         val url = NetworkConstant.BASE_URL + NetworkConstant.PATH_MENU
 
@@ -52,9 +64,8 @@ class CategoryActivity : AppCompatActivity() {
             { response ->
                 Log.d("request", response.toString(2))
                 val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
-                menuResult.data.forEach {
-                    Log.d("request", it.name)
-                }
+                val items = menuResult.data.firstOrNull { it.name == ItemType.categoryTitle(selectedItem) }
+                loadList(items?.items)
             },
             { error ->
                 error.message?.let {
@@ -64,28 +75,16 @@ class CategoryActivity : AppCompatActivity() {
                 }
             }
         )
-
-        /*
-// Request a string response from the provided URL.
-        val stringRequest = StringRequest(
-            Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                // Display the first 500 characters of the response string.
-                Log.d("request", response)
-            },
-            Response.ErrorListener {
-                Log.d("request", "not working ${it.localizedMessage}")
-            })
-*/
-// Add the request to the RequestQueue.
         queue.add(request)
     }
 
-    private fun loadList() {
-        var entries = listOf<String>("salade", "boeuf", "glace")
-        val adapter = CategoryAdapter(entries)
-        bindind.recyclerView.layoutManager = LinearLayoutManager(this)
-        bindind.recyclerView.adapter = adapter
+    private fun loadList(dishes: List<Dish>?) {
+        val entries = dishes?.map { it.name }
+        entries?.let {
+            val adapter = CategoryAdapter(entries)
+            bindind.recyclerView.layoutManager = LinearLayoutManager(this)
+            bindind.recyclerView.adapter = adapter
+        }
     }
 
     private fun getCategoryTitle(item: ItemType?): String {
