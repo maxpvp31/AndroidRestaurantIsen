@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.isen_2021.R
 import com.example.isen_2021.databinding.ActivityDetailBinding
 import com.example.isen_2021.network.Dish
+import kotlin.math.max
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -29,11 +30,21 @@ class DetailActivity : AppCompatActivity() {
         binding.ingredientTextView.text = dish.ingredients.map { it.name }?.joinToString(", ")
         binding.viewPager.adapter = PhotoAdapter(this, dish.images)
         refreshShop(dish)
+
+        binding.less.setOnClickListener {
+            itemCount = max(1, itemCount - 1)
+            refreshShop(dish)
+        }
+
+        binding.more.setOnClickListener {
+            itemCount += 1
+            refreshShop(dish)
+        }
     }
 
     private fun refreshShop(dish: Dish) {
-        val price = itemCount * dish.prices.first().price.toInt()
+        val price = itemCount * dish.prices.first().price.toFloat()
         binding.itemCount.text = itemCount.toString()
-        binding.shopButton.text = "${getString(R.string.total)} $price"
+        binding.shopButton.text = "${getString(R.string.total)} $price€"
     }
 }
