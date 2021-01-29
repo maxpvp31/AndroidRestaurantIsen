@@ -2,9 +2,13 @@ package com.example.isen_2021.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.isen_2021.R
+import com.example.isen_2021.basket.BasketItem
 import com.example.isen_2021.databinding.ActivityDetailBinding
 import com.example.isen_2021.network.Dish
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlin.math.max
 
 class DetailActivity : AppCompatActivity() {
@@ -46,5 +50,16 @@ class DetailActivity : AppCompatActivity() {
         val price = itemCount * dish.prices.first().price.toFloat()
         binding.itemCount.text = itemCount.toString()
         binding.shopButton.text = "${getString(R.string.total)} $price€"
+        addToBasket(dish, itemCount)
+    }
+
+    private fun addToBasket(dish: Dish, count: Int) {
+        // Recuperer le basket du fichier
+        // si il existe pas, le créer
+        // mettre à jour le basket avec notre basket item
+        // En vérifiant basketitem similaire
+        val item = BasketItem(dish, count)
+        val json = GsonBuilder().create().toJson(item)
+        Log.d("basket", json)
     }
 }
