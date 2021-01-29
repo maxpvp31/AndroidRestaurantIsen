@@ -1,3 +1,5 @@
 package com.example.isen_2021.network
 
-class Price(val price: String) {}
+import java.io.Serializable
+
+class Price(val price: String): Serializable {}

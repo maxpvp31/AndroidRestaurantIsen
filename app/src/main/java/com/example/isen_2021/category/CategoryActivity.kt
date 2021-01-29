@@ -1,18 +1,17 @@
 package com.example.isen_2021
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.isen_2021.category.CategoryAdapter
 import com.example.isen_2021.databinding.ActivityCategoryBinding
+import com.example.isen_2021.detail.DetailActivity
 import com.example.isen_2021.network.Dish
 import com.example.isen_2021.network.MenuResult
 import com.example.isen_2021.network.NetworkConstant
@@ -120,8 +119,9 @@ class CategoryActivity : AppCompatActivity() {
     private fun loadList(dishes: List<Dish>?) {
         dishes?.let {
             val adapter = CategoryAdapter(it) { dish ->
-                //TODO afficher activité detail
-                Log.d("dish", "selected dish ${dish.name}")
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.DISH_EXTRA, dish)
+                startActivity(intent)
             }
             bindind.recyclerView.layoutManager = LinearLayoutManager(this)
             bindind.recyclerView.adapter = adapter

@@ -7,4 +7,6 @@
     <string name="dessert">Désserts</string>
 
     <string name="toast_content">Contenu du toast</string>
+
+    <string name="total">Total</string>
 </resources>

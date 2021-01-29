@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Isen_2021"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".detail.DetailActivity"></activity>
         <activity android:name=".CategoryActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
