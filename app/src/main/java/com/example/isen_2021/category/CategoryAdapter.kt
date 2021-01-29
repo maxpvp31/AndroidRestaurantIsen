@@ -6,8 +6,10 @@ import android.widget.ExpandableListView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.isen_2021.R
 import com.example.isen_2021.databinding.DishesCellBinding
 import com.example.isen_2021.network.Dish
+import com.squareup.picasso.Picasso
 
 class CategoryAdapter(private val entries: List<Dish>,
                       private val entryClickListener: (Dish) -> Unit)
@@ -37,6 +39,10 @@ class CategoryAdapter(private val entries: List<Dish>,
         fun bind(dish: Dish) {
             titleView.text = dish.name
             priceView.text = "${dish.prices.first().price} €" // dish.prices.first().price + " €"
+            Picasso.get()
+                .load(dish.getThumbnailUrl())
+                .placeholder(R.drawable.android_logo_restaurant)
+                .into(imageView)
         }
     }
 }
