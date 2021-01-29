@@ -80,6 +80,7 @@ class CategoryActivity : AppCompatActivity() {
     private fun loadList(dishes: List<Dish>?) {
         dishes?.let {
             val adapter = CategoryAdapter(it) { dish ->
+                //TODO afficher activité detail
                 Log.d("dish", "selected dish ${dish.name}")
             }
             bindind.recyclerView.layoutManager = LinearLayoutManager(this)
