@@ -7,6 +7,7 @@ import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.isen_2021.basket.Basket
 import com.example.isen_2021.basket.BasketActivity
 import com.example.isen_2021.detail.DetailActivity
 
@@ -35,7 +36,7 @@ open class BaseActivity: AppCompatActivity() {
     }
 
     private fun getItemsCount(): Int {
-        val sharedPreferences = getSharedPreferences(DetailActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getInt(DetailActivity.ITEMS_COUNT, 0)
+        val sharedPreferences = getSharedPreferences(Basket.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getInt(Basket.ITEMS_COUNT, 0)
     }
 }

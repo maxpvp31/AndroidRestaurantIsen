@@ -5,39 +5,28 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.isen_2021.R
 import com.example.isen_2021.databinding.ActivityBasketBinding
+import com.example.isen_2021.detail.DetailViewFragment
 
-class BasketActivity : AppCompatActivity()/*, BasketCellInterface */{
+class BasketActivity : AppCompatActivity(), BasketCellInterface {
     lateinit var binding: ActivityBasketBinding
+    private lateinit var basket: Basket
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBasketBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        basket = Basket.getBasket(this)
 
-        reloadData(Basket.getBasket(this))
+        val fragment = BasketItemsFragment(basket, this)
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, fragment).commit()
     }
 
-    private fun reloadData(basket: Basket) {
-        binding.basketRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.basketRecyclerView.adapter = BasketAdapter(basket, this) {
-            val basket = Basket.getBasket(this)
-            val itemToDelete = basket.items.firstOrNull { it.dish.name == it.dish.name }
-            basket.items.remove(itemToDelete)
-            basket.save(this)
-            reloadData(basket)
-        }
-    }
-
-    /*
     override fun onDeleteItem(item: BasketItem) {
-        val basket = Basket.getBasket(this)
-        val itemToDelete = basket.items.firstOrNull { it.dish.name == item.dish.name }
-        basket.items.remove(itemToDelete)
+        basket.items.remove(item)
         basket.save(this)
-        reloadData(basket)
     }
 
     override fun onShowDetail(item: BasketItem) {
-        TODO("Not yet implemented")
+        val fragment = DetailViewFragment(item.dish)
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
     }
-     */
 }
