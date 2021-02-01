@@ -8,6 +8,14 @@ import java.io.Serializable
 
 class Basket (val items: MutableList<BasketItem>): Serializable {
 
+    var itemsCount: Int = 0
+        get() {
+        return items
+                .map { it.count }
+                .reduce { acc, i -> acc + i }
+    }
+
+
     fun addItem(item: BasketItem) {
         val existingItem = items.firstOrNull {
             it.dish.name == item.dish.name
