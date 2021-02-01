@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.isen_2021.R
+import com.example.isen_2021.basket.Basket
 import com.example.isen_2021.basket.BasketItem
 import com.example.isen_2021.databinding.ActivityDetailBinding
 import com.example.isen_2021.network.Dish
@@ -44,22 +45,23 @@ class DetailActivity : AppCompatActivity() {
             itemCount += 1
             refreshShop(dish)
         }
+
+        binding.shopButton.setOnClickListener {
+            addToBasket(dish, itemCount)
+        }
     }
 
     private fun refreshShop(dish: Dish) {
         val price = itemCount * dish.prices.first().price.toFloat()
         binding.itemCount.text = itemCount.toString()
         binding.shopButton.text = "${getString(R.string.total)} $price€"
-        addToBasket(dish, itemCount)
     }
 
     private fun addToBasket(dish: Dish, count: Int) {
-        // Recuperer le basket du fichier
-        // si il existe pas, le créer
-        // mettre à jour le basket avec notre basket item
-        // En vérifiant basketitem similaire
-        val item = BasketItem(dish, count)
-        val json = GsonBuilder().create().toJson(item)
+        val basket = Basket.getBasket(this)
+        basket.addItem(BasketItem(dish, count))
+        basket.save(this)
+        val json = GsonBuilder().create().toJson(basket)
         Log.d("basket", json)
     }
 }
