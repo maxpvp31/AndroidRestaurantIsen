@@ -1,11 +1,13 @@
 package com.example.isen_2021
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.isen_2021.basket.BasketActivity
 import com.example.isen_2021.detail.DetailActivity
 
 open class BaseActivity: AppCompatActivity() {
@@ -20,11 +22,16 @@ open class BaseActivity: AppCompatActivity() {
         countText?.text = count.toString()
 
         menuView?.setOnClickListener {
-            // Start basket activity
-            Log.d("basket", "Start basket activity")
+            val intent = Intent(this, BasketActivity::class.java)
+            startActivity(intent)
         }
 
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
     }
 
     private fun getItemsCount(): Int {
