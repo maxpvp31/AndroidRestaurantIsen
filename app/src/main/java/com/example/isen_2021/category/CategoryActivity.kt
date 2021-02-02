@@ -111,7 +111,6 @@ class CategoryActivity : BaseActivity() {
     }
 
     private fun resultFromCache(): String? {
-        return null
         val sharedPreferences = getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(REQUEST_CACHE, null)
     }
