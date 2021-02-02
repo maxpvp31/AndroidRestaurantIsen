@@ -1,5 +1,6 @@
 package com.example.isen_2021.basket
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -52,7 +53,7 @@ class BasketActivity : AppCompatActivity(), BasketCellInterface {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == UserActivity.REQUEST_CODE) {
+        if(requestCode == UserActivity.REQUEST_CODE && resultCode == Activity.RESULT_FIRST_USER) {
             val sharedPreferences = getSharedPreferences(UserActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
             val idUser = sharedPreferences.getInt(UserActivity.ID_USER, -1)
             if(idUser != -1) {
